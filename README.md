@@ -1,2 +1,2 @@
-# Overhypothesis-formation-in-new-caledonian-crows
-Modeling overhypothesis formation in New Caledonian Crows sampling hidden food rewards.
+# Overhypothesis formation in new caledonian crows
+Modeling the formation of Overhypotheses in a hidden food sampling task.
