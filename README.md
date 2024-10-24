@@ -7,7 +7,7 @@ Modeling the formation of overhypotheses in New Caledonian Crows. Crows sample d
 First, you will need to install Julia: **https://julialang.org/downloads/**
 Once julia is installed on your machine, you can run it by entering "julia" in the terminal.
 
-Next, you will need to install IJulia by following the instructions here: **https://github.com/JuliaLang/IJulia.jl**
+Next, you will need to install IJulia by following the instructions here: **https://github.com/JuliaLang/IJulia.jl**.
 Once successfully installed you will be able to run a Julia kernel in Jupyter Notebook.
 
 To run the scripts in this repository first install the dependencies by running:
