@@ -1,10 +1,11 @@
 # Overhypothesis formation in new caledonian crows
-Modeling the formation of overhypotheses in New Caledonian Crows. Crows sample different food types (high- and low-value) and learn about their distribution (represented by α and β) within and across a series of containers. In the test condition (final container), this abstract knowledge informs the probability of finding a high-value item (θ[high-value]).
+Modeling the formation of overhypotheses in New Caledonian Crows. Crows sample different food types (high- and low-value) and learn about their distribution (represented by α and β) within and across a series of containers. In the test condition (final container), this abstract knowledge informs the probability of finding a high-value item (θ[high-value]), while all sampled items are low-value.
 
 ![me](https://github.com/AlexHRuf/Overhypothesis-formation-in-new-caledonian-crows/blob/main/Animations/theta_evolution_combined_dark.gif)
 Mixed group (left): Crows in the mixed group learn that there is an equal amount of low- and high-value food across containers (β = 0.5) and that this distribution is reflected in each container (high α).
 Uniform group (right): Crows in the uniform group learn that there is an equal amount of low- and high-value food across containers (β = 0.5) but that only one item type can be found in each container (low α).
 
+When continuously sampling low-value items in the test, mixed group birds predict a high probability of finding a high-value item even after several samples. Meanwhile, uniform group birds only need to see one low-value sample to be almost certain that they will not find a high-value item. 
 
 # How to run the .ipynb scripts using Julia
 First, you will need to install Julia: **https://julialang.org/downloads/**
