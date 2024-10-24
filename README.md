@@ -1,5 +1,5 @@
 # Overhypothesis formation in new caledonian crows
-Modeling the formation of overhypotheses in New Caledonian Crows. Crows sample different food types (high- and low-value) and learn about the distribution of types within and across containers. In the test condition, this abstract knowledge can be applied to accurately predict the probability of finding low- or high-value items and inform decision-making.
+Modeling the formation of overhypotheses in New Caledonian Crows. Crows sample different food types (high- and low-value) and learn about their distribution (represented by α and β) within and across a series of containers. In the test condition (final container), this abstract knowledge informs the probability of finding a high-value item (θ[high-value]).
 
 ![me](https://github.com/AlexHRuf/Overhypothesis-formation-in-new-caledonian-crows/blob/main/Animations/theta_evolution_combined_dark.gif)
 
