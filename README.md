@@ -10,7 +10,7 @@ Uniform group (right): Crows in the uniform group learn that there is an equal a
 When continuously sampling low-value items in the test, mixed group birds predict a high probability of finding a high-value item even after several samples. Meanwhile, uniform group birds only need to see one low-value sample to be almost certain that they will not find a high-value item. 
 
 # How to run the .ipynb scripts using Julia
-First, you will need to install Julia: **https://julialang.org/downloads/**
+First, you will need to install Julia: **https://julialang.org/downloads/**.
 Once Julia is installed on your machine, you can run it by entering "julia" in the terminal. For further information on getting started in Julia and how it differs from other languages see: **https://docs.julialang.org/en/v1/manual/getting-started/**. 
 
 Next, you will need to install IJulia by following the instructions here: **https://github.com/JuliaLang/IJulia.jl**.
