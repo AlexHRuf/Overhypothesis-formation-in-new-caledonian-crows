@@ -1,5 +1,5 @@
 # Overhypothesis formation in new caledonian crows
-Modeling the formation of overhypotheses in New Caledonian Crows. Crows [in this example the ideal model of a crow capable of abstraction] sample different food types (high- and low-value) and learn about their distribution within and across a series of containers (represented by α and β). In the test condition (final container, shown below), this abstract knowledge informs the probability of finding a high-value item (θ[high-value]), while consecutively sampling low-value items.
+Modelling the formation of overhypotheses in New Caledonian Crows. Crows [in this example the ideal model of a crow capable of abstraction] sample different food types (high- and low-value) and learn about their distribution within and across a series of containers (represented by α and β). In the test condition (final container, shown below), this abstract knowledge informs the probability of finding a high-value item (θ[high-value]), while consecutively sampling low-value items.
 
 ![me](https://github.com/AlexHRuf/Overhypothesis-formation-in-new-caledonian-crows/blob/main/Animations/theta_evolution_combined_dark.gif)
 
@@ -11,7 +11,7 @@ When continuously sampling low-value items in the test, mixed group birds predic
 
 # How to run the .ipynb scripts using Julia
 First, you will need to install Julia: **https://julialang.org/downloads/**
-Once julia is installed on your machine, you can run it by entering "julia" in the terminal. For further information about getting started in Julia and how it differes from other languages see: **https://docs.julialang.org/en/v1/manual/getting-started/**. 
+Once Julia is installed on your machine, you can run it by entering "julia" in the terminal. For further information on getting started in Julia and how it differs from other languages see: **https://docs.julialang.org/en/v1/manual/getting-started/**. 
 
 Next, you will need to install IJulia by following the instructions here: **https://github.com/JuliaLang/IJulia.jl**.
 Once successfully installed you will be able to run a Julia kernel in Jupyter Notebook.
