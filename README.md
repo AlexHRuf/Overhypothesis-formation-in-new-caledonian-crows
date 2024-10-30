@@ -3,7 +3,7 @@ Modelling the formation of overhypotheses in New Caledonian Crows. Crows [in thi
 
 ![me](https://github.com/AlexHRuf/Overhypothesis-formation-in-new-caledonian-crows/blob/main/Models/Animations/theta_evolution_groups_tests.gif)
 
-When continuously sampling low-value items from the Test 1 container, mixed group birds predict a high probability of finding a high-value item even after several samples. Meanwhile, uniform group birds only need to see one low-value sample to be almost certain that they will not find a high-value item in Test 1. Meanwhile, the probability of sampling a high-value item from the Test 2 container stays relatively constant, prompting crows to switch from Test 1 to Test 2.
+When continuously sampling low-value items from the Test 1 container (red), mixed group birds predict a high probability of finding a high-value item even after several samples. Meanwhile, uniform group birds only need to see one low-value sample to be almost certain that they will not find a high-value item in Test 1. The probability of sampling a high-value item from the Test 2 container (gray) stays relatively constant. This creates the incentive for crows to switch from the Test 1 to the Test 2 container. Crows that are in the uniform group are expected to make the switch earlier (after fewer samples) than crows from the mixed group.
 
 # How to run the .ipynb scripts using Julia
 First, you will need to install Julia: **https://julialang.org/downloads/**.
