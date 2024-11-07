@@ -4,18 +4,18 @@ data{
   int N_id;        //Total number of birds      
   int N_food;      //Total number of food items (2)          
   int N_sess;      //Total number of sessions       
-  int T_test;      //Total number of test trials across individuals        
-  
+  int T_test;      //Total number of test trials across individuals
+
   int total_eat[N_id, N_food]; //Total pieces of food item 1 and 2 eaten
-  real log_dur[N_id];          //Total duration of preference test in seconds (log transformed)
+  real log_dur[N_id, N_food];  //Total duration of preference test in seconds (log transformed)
   
-  int id[N];        //Bird-specific individual identificaiton number (1 .. N)        
-  int sess[N];      //Session identification number (1 .. N_sess)           
-  int trial[N];     //Within session running trial account      
-  int cum_trial[N]; //Running trial count that resets between phases      
-  int sample[N];    //Food item sampled (1 = high, 2 = low)      
-  int test[N];      //Whether the test session (0 = no, 1 = yes)   
-  int choice[N];    //Whether stay or switch (1 = stay, 2 = switch) - note: cannot 0/1 dummy code dependent variabels in stan    
+  int id[N];          //Bird-specific individual identificaiton number (1 .. N)        
+  int sess[N];        //Session identification number (1 .. N_sess)           
+  int trial[N];       //Within session running trial account      
+  int cum_trial[N];   //Running trial count that resets between phases      
+  int sample[N];      //Food item sampled (1 = high, 2 = low)      
+  int test[N];        //Whether the test session (0 = no, 1 = yes)   
+  int choice[N_test]; //Whether stay or switch (1 = stay, 2 = switch) - note: cannot 0/1 dummy code dependent variabels in stan    
 
 }
   
@@ -42,7 +42,7 @@ transformed parameters{
   simplex[2] S_Prob[T_test]; 
   matrix[N, 5] alpha_T; 
   matrix[N, 5] Prob_F;  
-  matrix[N, 5] Prob_S; 
+  matrix[T_test, 5] Prob_S; 
 
   v_ID = (diag_pre_multiply(sigma_ID, Rho_ID) * z_ID)'; 
 
@@ -111,17 +111,21 @@ transformed parameters{
       a_T[id[i]] = softmax(a_T_update); 
 
       if(test[i] == 1){
+        
+        int tt; //Indexing variable for current test trial (1 .. T_Test)
+        tt = cum_trial[i];
+        
         A_row = to_vector(A[id[i], 1:2]);        
         pF_x_A_row = pF .* A_row;                
         scaled_pF_x_A_row = lambda_ind * pF_x_A_row;        
         pS = softmax(scaled_pF_x_A_row);       
 
-        S_Prob[cum_trial[i]] = pS; 
+        S_Prob[tt] = pS; 
 
         temp[4] = pS[1];
         temp[5] = pS[2];
 
-        Prob_S[i, 1:5] = temp';
+        Prob_S[tt, 1:5] = temp';
         
       }
       
@@ -159,7 +163,7 @@ model{
 
   for(j in 1:N_id){
     for(f in 1:N_food){
-      total_eat[j] ~ poisson_log(alpha_p + log_dur[j] + weight_p * inv_logit(V_p[j, f]));
+      total_eat[j,f] ~ poisson_log(alpha_p + log_dur[j,f] + weight_p * inv_logit(V_p[j, f]));
     }
   }
 
