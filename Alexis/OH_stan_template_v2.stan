@@ -12,8 +12,8 @@ data{
 parameters{
   //Sampling parameters
   real<lower=0> gamma[N_id]; //Over-over hypothesis
-  vector<lower=0>[N_colors] alpha[N_id]; //Overhypthosis about food item variability
-  simplex[N_colors] beta[N_id]; //Overhypothesis about food item distribution
+  vector<lower=0>[N_food] alpha[N_id]; //Overhypthosis about food item variability
+  simplex[N_food] beta[N_id]; //Overhypothesis about food item distribution
   array[N_id] simplex[N_food] theta[N_board]; //Local knowledge about food item variability & distribution
   
   //Test parameters
@@ -55,10 +55,10 @@ model{
   //Loop through sample choices per individual
   for(s in 1:N_test){
     //Prob of food item
-    vector[N_colors] P_F; //Probabilities of each food item before sampling
+    vector[N_food] P_F; //Probabilities of each food item before sampling
     real w_alpha; 
     real w_beta; 
-    vector[N_colors] new_alpha;
+    vector[N_food] new_alpha;
     //Update posterior counts based on observed sample
     if (s > 1){
       food_counts[id[s], y_test[s - 1]] += 1.0; //Increment count for observed sample
