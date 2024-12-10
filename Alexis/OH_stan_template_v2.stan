@@ -26,7 +26,7 @@ parameters{
   real weight_alpha[N_id]; //Weight for updating alpha dynamically in-test
   real weight_beta[N_id]; //Weight for updating beta dynamically in-test
   real lambda[N_id]; //Sensitivity about P_F differences
-  real<lower=0> trial_effect; // Effect of trial number on switch likelihood
+  real trial_effect; // Effect of trial number on switch likelihood
 }
 model{
 
