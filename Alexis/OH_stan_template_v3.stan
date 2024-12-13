@@ -6,7 +6,7 @@ data{
   int<lower=1> N_id;   //Total number of individuals
   
   //Preference variables
-  int PT_total_eat[N_id, N_food]; //Total pieces of food item 1 (low) and 2 (high) eaten
+  int PT_total_eat[N_id, N_food]; //Total pieces of food item 1 (high) and 2 (low) eaten
   real PT_log_dur[N_id, N_food];  //Total duration of preference test in seconds (log transformed)
 
   //Sampling variables
@@ -15,7 +15,7 @@ data{
   
   //Test variables
   int ALL_total_eat[N_id, N_food]; //Total pieces of food item 1 and 2 eaten across pref test & sampling per bird
-  real ALL_log_dur[N_id];          //Total duration of preference test in seconds (log transformed) across pref test & sampling per bird
+  real ALL_log_dur[N_id];          //Total duration (log transformed) spent across pref test & sampling per bird
   int<lower=1> y_test[N_test];     //Observed samples from board 11 (1 = high quality item; 2 = low quality item)
   int<lower=1> y_test_ate[N_test]; //Observed eating (or not) of sample from board 11
   int<lower=1> id[N_test];         //Unique identification
@@ -39,12 +39,12 @@ parameters{
   
   //Test latent parameters
   real ALL_alpha;                   //Intercept i.e., rate of random choice 
-  real<lower=0> ALL_weight;         //Weight for influence of ALl_F_value on total choices; some birds might be more affected than others
+  real<lower=0> ALL_weight;         //Weight for influence of ALL_F_value on total choices; some birds might be more affected than others
   matrix[N_id, N_food] ALL_F_value; //High and Low quality individual-level 'value' estimates for all food eaten across pref test & sampling
-  real weight_alpha;          //Weight for updating alpha dynamically in-test
-  real weight_beta;           //Weight for updating beta dynamically in-test
-  real lambda;                //Sensitivity about P_F differences in boards
-  real phi;                   //Learning rate about food attractions
+  real weight_alpha;                //Weight for updating alpha dynamically in-test
+  real weight_beta;                 //Weight for updating beta dynamically in-test
+  real lambda;                      //Sensitivity about P_F differences in boards
+  real phi;                         //Learning rate about food attractions
   real trial_effect;                //Effect of trial number on switch likelihood
   
   //Individual varying effects parameters
