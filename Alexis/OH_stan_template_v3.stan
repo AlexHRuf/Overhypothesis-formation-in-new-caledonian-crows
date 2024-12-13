@@ -226,7 +226,7 @@ model{
   
   //Switch likelihood
   for(s in 1:N_test){
-    Switch[s] ~ categorical(P_S);  
+    Switch[s] ~ categorical(Prob_S[s]);  
   }
 }
 
