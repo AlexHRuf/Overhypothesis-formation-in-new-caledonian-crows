@@ -133,7 +133,7 @@ transformed parameters{
       trial_influence = trial_effect * trial[s]; 
 
       //Compute switch probabilities
-      P_S = softmax(L * (P_F_b11 * A_F / P_F_b12 * A_F) + trial_influence);
+      P_S = softmax(L * ( (P_F_b11 * A_F) / (P_F_b12 * A_F) ) + trial_influence);
       Prob_S[s] = P_S; //Send to global
       
       //Update food counts after observed sample
