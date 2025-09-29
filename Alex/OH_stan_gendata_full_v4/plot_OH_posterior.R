@@ -10,7 +10,12 @@ res_global_kappa <-  extract_OH_draws(fit_global_kappa,dataList, width = 0.95)
 res_id_kappa <-  extract_OH_draws(fit_id_kappa,dataList, width = 0.95)
 res_fixed_kappa <-  extract_OH_draws(fit_fixed_kappa,dataList, width = 0.95)
 
-res <- res_fixed_kappa
+#Select the desired model to plot below here:
+res <- res_no_kappa #Does not work 
+res <- res_global_kappa #Better
+res <- res_id_kappa #Better
+res <- res_fixed_kappa #Fixing kappa seems to work best
+
 # -------------- plots --------------
 #Global parameter plots
 global_long <- res$draws$scalars %>%

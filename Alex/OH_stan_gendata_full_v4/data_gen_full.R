@@ -1,3 +1,4 @@
+#data_gen_full.R
 generate_stan_data_full <- function(
     # --- sizes & indexing ---
   N_id = 16,
@@ -16,16 +17,16 @@ generate_stan_data_full <- function(
   beta_mixed    = c(0.5, 0.5),  # β for "mixed" group (simplex)
   beta_uniform  = c(0.5, 0.5),  # β for "uniform" group (simplex)
   
-  # --- treatment-level means (RAW scales) ---
-  # λ (utility sensitivity): raw = log L
-  lambda_raw_mixed   = 0.0,
-  lambda_raw_uniform = 0.0,
-  # φ (attraction update):  raw = logit P
-  phi_raw_mixed      = 0.0,
-  phi_raw_uniform    = 0.0,
-  # κ (stickiness / switch cost): raw = log K
-  kappa_raw_mixed    = 0.0,
-  kappa_raw_uniform  = 0.0,
+  # --- treatment-level means (OUTCOME / NATURAL scales) ---
+  # λ (utility sensitivity): outcome L > 0
+  lambda_mixed   = 1.0,
+  lambda_uniform = 1.0,
+  # φ (attraction update):  outcome P in (0,1)
+  phi_mixed      = 0.5,
+  phi_uniform    = 0.5,
+  # κ (stickiness / switch cost): outcome K >= 0
+  kappa_mixed    = 1.0,
+  kappa_uniform  = 1.0,
   
   # --- per-ID random effects sd's for (λ, φ, κ) ON RAW SCALE ---
   heterogeneity = TRUE,
@@ -60,6 +61,15 @@ generate_stan_data_full <- function(
   }
   softmax   <- function(x) { ex <- exp(x - max(x)); ex/sum(ex) }
   invlogit  <- function(x) 1/(1+exp(-x))
+  logit <- function(p) log(p/(1-p))
+  
+  # --- sanity checks on outcome-scale inputs ---
+  if (lambda_mixed <= 0 || lambda_uniform <= 0)
+    stop("lambda_* must be > 0 (outcome scale).")
+  if (phi_mixed <= 0 || phi_mixed >= 1 || phi_uniform <= 0 || phi_uniform >= 1)
+    stop("phi_* must be in (0,1) (outcome scale).")
+  if (kappa_mixed < 0 || kappa_uniform < 0)
+    stop("kappa_* must be >= 0 (outcome scale).")
   
   # ---- tiny rmvnorm via Cholesky with per-ID means ----
   rmvnorm_chol_means <- function(mu_mat, Sigma) {
@@ -131,15 +141,17 @@ generate_stan_data_full <- function(
   }
   
   # ---------- per-ID random effects for (λ, φ, κ) with treatment-specific RAW means ----------
+  # Convert OUTCOME-scale means (L, P, K) to RAW means (log L, logit P, log K)
   mu_by_id_raw <- matrix(NA_real_, nrow = N_id, ncol = 3)
   for (i in seq_len(N_id)) {
     if (treatment[i] == "mixed") {
-      mu_by_id_raw[i, ] <- c(lambda_raw_mixed, phi_raw_mixed, kappa_raw_mixed)
+      mu_by_id_raw[i, ] <- c(log(lambda_mixed),  logit(phi_mixed),  log(pmax(kappa_mixed, .Machine$double.eps)))
     } else { # uniform
-      mu_by_id_raw[i, ] <- c(lambda_raw_uniform, phi_raw_uniform, kappa_raw_uniform)
+      mu_by_id_raw[i, ] <- c(log(lambda_uniform), logit(phi_uniform), log(pmax(kappa_uniform, .Machine$double.eps)))
     }
   }
   colnames(mu_by_id_raw) <- c("lambda_raw_i","phi_raw_i","kappa_raw_i")
+  
   
   # Covariance across (λ, φ, κ) in RAW space
   sds3 <- c(sd_lambda, sd_phi, sd_kappa)
@@ -341,13 +353,23 @@ generate_stan_data_full <- function(
       alpha_uniform = alpha_uniform,
       beta_mixed = beta_mixed,
       beta_uniform = beta_uniform,
-      # raw means (echo)
-      lambda_raw_mixed   = lambda_raw_mixed,
-      lambda_raw_uniform = lambda_raw_uniform,
-      phi_raw_mixed      = phi_raw_mixed,
-      phi_raw_uniform    = phi_raw_uniform,
-      kappa_raw_mixed    = kappa_raw_mixed,
-      kappa_raw_uniform  = kappa_raw_uniform,
+      
+      # outcome-scale means (echo)
+      lambda_mixed   = lambda_mixed,
+      lambda_uniform = lambda_uniform,
+      phi_mixed      = phi_mixed,
+      phi_uniform    = phi_uniform,
+      kappa_mixed    = kappa_mixed,
+      kappa_uniform  = kappa_uniform,
+      
+      # (optional) derived RAW means for reference
+      lambda_raw_mixed   = log(lambda_mixed),
+      lambda_raw_uniform = log(lambda_uniform),
+      phi_raw_mixed      = log(phi_mixed/(1-phi_mixed)),
+      phi_raw_uniform    = log(phi_uniform/(1-phi_uniform)),
+      kappa_raw_mixed    = log(pmax(kappa_mixed, .Machine$double.eps)),
+      kappa_raw_uniform  = log(pmax(kappa_uniform, .Machine$double.eps)),
+      
       heterogeneity = heterogeneity,
       sd_lambda = sd_lambda,
       sd_phi    = sd_phi,
